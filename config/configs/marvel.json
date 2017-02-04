@@ -1,0 +1,10 @@
+{
+    "basepath": {
+        "doc": "base path of the chronology project",
+        "default": "http://www.chronologyproject.com"
+    },
+    "indices": {
+        "doc":"index to append to base path",
+        "default": ["a.php"]
+    }
+}

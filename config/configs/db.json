@@ -1,0 +1,9 @@
+{
+    "host": "localhost",
+    "port":"",
+    "prefix": "mongodb://",
+    "database": "marvel",
+    "authEnabled": false,
+    "userName": "",
+    "password": ""
+}
