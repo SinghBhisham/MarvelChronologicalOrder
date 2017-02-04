@@ -1,51 +1,51 @@
 var mgr = require('../index.js');
 var Promise = require("bluebird");
-/*
- * this class is for abstacting the crud operations
- * all the model classes should inherit it
- */
+    /*
+     * this class is for abstacting the crud operations
+     * all the model classes should inherit it
+     */
 
 function BaseModel(){}
 
 
 BaseModel.prototype.create = function(){
     let self = this;
-    return mgr.getDB().then(db=>{
+    return mgr.getDB().then(db => {
         let model = db.getModel(self.modelName);
-        return Promise.promisify(model.create).apply(model, arguments);
+        return Promise.promisify(model.create).apply(model, arguments).then(res => res.toJSON());
     });
 };
 
 BaseModel.prototype.createMultiple = function(){
     let self = this;
-    return mgr.getDB().then(db=>{
+    return mgr.getDB().then(db => {
         let model = db.getModel(self.modelName);
-        return Promise.promisify(model.collection.insert).apply(model, arguments);
+        return Promise.promisify(model.collection.insertMany).apply(model, arguments).then(res => res.toJSON());
     });
 };
 
 
 BaseModel.prototype.update = function(){
     let self = this;
-    return mgr.getDB().then(db=>{
+    return mgr.getDB().then(db => {
         let model = db.getModel(self.modelName);
-        return Promise.promisify(model.update).apply(model, arguments);
+        return Promise.promisify(model.update).apply(model, arguments).then(res => res.toJSON());
     });
 };
 
 BaseModel.prototype.find = function(){
     let self = this;
-    return mgr.getDB().then(db=>{
+    return mgr.getDB().then(db => {
         let model = db.getModel(self.modelName);
-        return Promise.promisify(model.find).apply(model, arguments);
+        return Promise.promisify(model.find).apply(model, arguments).then(res => res.toJSON());
     });
 };
 
 BaseModel.prototype.findOneAndUpdate = function(){
     let self = this;
-    return mgr.getDB().then(db=>{
+    return mgr.getDB().then(db => {
         let model = db.getModel(self.modelName);
-        return Promise.promisify(model.create).findOneAndUpdate(model, arguments);
+        return Promise.promisify(model.create).findOneAndUpdate(model, arguments).then(res => res.toJSON());
     });
 };
 

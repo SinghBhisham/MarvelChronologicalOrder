@@ -11,33 +11,35 @@ var _ = require('lodash');
 
 var indices = config.marvel.indices;
 var basepath = config.marvel.basepath;
+var extn = config.marvel.extn;
 
 
 function saveCharacter(char){
-    debug('saveCharacer');
+    var aliases = char.split("/");
     return charModel.create({
-        name: char.trim()
+        name: _.slice(aliases, 0,1),
+        aliases: _.slice(aliases, 1)
     });
 }
 
 function saveAppearances(char, appearances){
-    debug('saveAppearances');
     var apps = _.map(appearances, a=>{
         return {
             name: a,
-            numOfAliased: 0,//implement this
-            characterId: char
+            numOfAliases: char.aliases.length,
+            characterId: char._id
         };
     });
+    //return appearModel.createMultiple(apps); This is not working somehow
     return Promise.map(apps, a=>{
         appearModel.create(a);
     });
 }
 
 function fetch(){
-    return Promise.map(indices, inx=> {
+    return Promise.each(indices, inx=> {
         debug('fetching for index ',inx);
-        return gethtml(url.resolve(basepath ,inx)).then($=> {
+        return gethtml(url.resolve(basepath ,inx + extn)).then($=> {
             let characters = $('#chrons > p');
             var createPs= [];
             characters.each(c=>{
@@ -48,14 +50,14 @@ function fetch(){
                     return saveAppearances(charid, chron.split(/\n/));
                 }));
             });
-            return Promise.all(createPs);
+            return Promise.all(createPs).tap(debug("done for %s", inx));
         });
 
     });
 }
 db.init().then(()=>{
     return fetch();
-}).then(()=>{
+}).finally(()=>{
     console.info('DONE!!!!!');
     db.close();
 });
