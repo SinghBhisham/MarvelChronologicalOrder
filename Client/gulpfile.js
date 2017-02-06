@@ -67,7 +67,7 @@ gulp.task("minify-images", function() {
              .pipe(gulp.dest(config.imagesOutputPath));
 });
 
-gulp.task("setup",["compile-ts","compile-styles","minify-images"], function(){
+gulp.task("setup",["compile-ts","compile-styles","minify-images", "index"], function(){
 
   gulp.src(config.bootstrapJSPath)
       .pipe(gulp.dest(config.bootstrapJSDestPath));
