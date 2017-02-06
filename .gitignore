@@ -1,4 +1,6 @@
 node_modules/*
-app/*
+Client/app/*
 public/css/*
-dist/*
+Client/dist/*
+Client/node_modules/*
+

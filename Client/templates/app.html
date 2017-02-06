@@ -1,0 +1,21 @@
+<div class="main-canvas">
+  <div class="header">
+      <div class="row">
+          <div class="col-md-12 title">
+              <div class="text-center title-link" [routerLink]="['/']">Marvel Search</div>
+          </div>
+      </div>
+  </div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav text-center">
+            <li><a [routerLink]="['/q1']">Ques 1</a></li>
+            <li><a [routerLink]="['/q2']">Ques 2</a></li>
+            <li><a [routerLink]="['/q3']">Ques 3</a></li>
+        </ul>
+     </div>
+</nav>
+  <div class="content">
+      <router-outlet></router-outlet>
+  </div>
+</div>

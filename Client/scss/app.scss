@@ -1,0 +1,42 @@
+.main-canvas{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0px;
+  bottom: 0;
+  .content{
+    padding: 30px;
+    height:calc(100% - 40px);
+    overflow: visible;
+  }
+}
+.header{
+  height: 40px;
+  background-color: rgb(2, 106, 167);
+  padding: 7px;
+  .title
+  {
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      .title-link{
+        cursor: pointer;
+      }
+  }
+
+}
+.content{
+  position: relative;
+  overflow-x: auto;
+}
+
+.navbar-nav{
+  ul{
+    float: none;
+    margin: 0 auto;
+    li{
+      float: none;
+      display: inline-block;
+    }
+  }
+}

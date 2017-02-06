@@ -1,0 +1,20 @@
+<h3> Question 1 </h3>
+<div class="">
+        <form [formGroup]="form" novalidate (ngSubmit)="getComics(form.value, form.valid)">
+            <label >Input character names, to search multiple seperate use ";" as delimiter</label>
+            <input class="form-control" type="text" formControlName="input" placeholder="input Characters like 'Captain America II'" />
+            <div class="form-group">
+                <div class="radio">
+                    <label><input type="radio" checked="checked" formControlName="op"  value="or">Show results with at least one character from a set of characters</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" formControlName="op" value="and">Show results with all characters from a set of characters</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success search">Search</button>
+        </form>
+    </div>
+<ul >
+    <li *ngFor="let res of results">{{res}}</li>
+</ul>
+<h4 *ngIf="results.length == 0">No Results</h4>

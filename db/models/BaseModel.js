@@ -37,9 +37,27 @@ BaseModel.prototype.find = function(){
     let self = this;
     return mgr.getDB().then(db => {
         let model = db.getModel(self.modelName);
-        return Promise.promisify(model.find).apply(model, arguments).then(res => res.toJSON());
+        return Promise.promisify(model.find).apply(model, arguments).then(res => res.map(r => r.toJSON()));
     });
 };
+
+BaseModel.prototype.findOne = function(){
+    let self = this;
+    return mgr.getDB().then(db => {
+        let model = db.getModel(self.modelName);
+        return Promise.promisify(model.findOne).apply(model, arguments).then(res =>res&& res.toJSON()||null);
+    });
+};
+
+
+BaseModel.prototype.aggregate = function(){
+    let self = this;
+    return mgr.getDB().then(db => {
+        let model = db.getModel(self.modelName);
+        return Promise.promisify(model.aggregate).apply(model, arguments);
+    });
+};
+
 
 BaseModel.prototype.findOneAndUpdate = function(){
     let self = this;

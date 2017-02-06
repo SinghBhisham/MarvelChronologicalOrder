@@ -7,7 +7,7 @@ var debug  = require('debug')('gethtmldata');
 
 function fetchdata(url){
     debug("request recieved for url", url);
-    return request(url);
+    return request(url).catch(e=>e);
 }
 
 function parse(data){

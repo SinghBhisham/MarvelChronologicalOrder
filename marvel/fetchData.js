@@ -14,18 +14,18 @@ var basepath = config.marvel.basepath;
 var extn = config.marvel.extn;
 
 
-function saveCharacter(char){
-    var aliases = char.split("/");
+function saveCharacter(name, title, aliases){
     return charModel.create({
-        name: _.slice(aliases, 0,1),
-        aliases: _.slice(aliases, 1)
+        name: name,
+        aliases: aliases
     });
 }
 
 function saveAppearances(char, appearances){
+    appearances = _.compact(appearances);
     var apps = _.map(appearances, a=>{
         return {
-            name: a,
+            comicName: a,
             numOfAliases: char.aliases.length,
             characterId: char._id
         };
@@ -36,27 +36,41 @@ function saveAppearances(char, appearances){
     });
 }
 
-function fetch(){
-    return Promise.each(indices, inx=> {
-        debug('fetching for index ',inx);
-        return gethtml(url.resolve(basepath ,inx + extn)).then($=> {
+function fetch(_indices){
+    var extIndices = [];
+    return Promise.each(_indices, inx=> {
+        var _url = url.resolve(basepath, inx);
+        console.info('fetching _url ', _url);
+        return gethtml(_url).then($=> {
             let characters = $('#chrons > p');
             var createPs= [];
             characters.each(c=>{
                 c = $(characters.get(c));
+                var name = c.attr('id');
                 var char = c.children('.char').text();
                 var  chron = c.children('.chron').text();
-                createPs.push(saveCharacter(char).then((charid)=>{
-                    return saveAppearances(charid, chron.split(/\n/));
+                if(!name){
+                    var link = c.find('a').attr('href');
+                    var linkMatch = link.match(/^(.*)\.php/);
+                    if(linkMatch){
+                        if(_indices.indexOf(linkMatch[0]) < 0 && extIndices.indexOf(linkMatch[0]) < 0){
+                            console.log('external link', linkMatch[0]);
+                            extIndices.push(linkMatch[0]);
+                        }
+                    }
+                }
+                createPs.push(saveCharacter(name, char, char.toLowerCase().split(/\//)).then((char)=>{
+                    return saveAppearances(char, chron.split(/\n/));
                 }));
             });
-            return Promise.all(createPs).tap(debug("done for %s", inx));
+            return Promise.all(createPs).tap(console.info("done for %s", _url));
         });
 
     });
 }
 db.init().then(()=>{
-    return fetch();
+    indices = _.map(indices, inx => inx + extn);
+    return fetch(indices);
 }).finally(()=>{
     console.info('DONE!!!!!');
     db.close();

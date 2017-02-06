@@ -5,10 +5,14 @@
     },
     "indices": {
         "doc":"index to append to base path",
-        "default": ["a", "b", "c", "d", "e","f", "g","h","i","j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "x", "y", "z"]
+        "default": ["a", "b", "c", "d", "e","f", "g","h","i","j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     },
     "extn": {
         "doc": "extentions of the file i.e. php",
         "default": ".php"
+    },
+    "apiprefix": {
+        "doc": "base prefix for all the marvel apis ",
+        "default": "marvel"
     }
 }

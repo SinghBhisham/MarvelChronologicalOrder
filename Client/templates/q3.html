@@ -1,0 +1,42 @@
+<h3> Question 3 </h3>
+<h4> Part a </h4>
+<div class="parta">
+    <h5 *ngIf="!resultA.length">No Entries</h5>
+    <div  *ngFor="let res of resultA">
+    <div >{{res._id}}</div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" 
+            aria-valuemin="0" aria-valuemax="100" style.width="{{(res.count*100/maxA)}}%">
+                {{res.count}}
+            </div>  
+        </div>
+    </div>
+</div>
+
+<h4> Part b </h4>
+<div class="partb">
+    <h5 *ngIf="!resultA.length">No Entries</h5>
+    <div  *ngFor="let res of resultB">
+    <div >{{res._id}}</div>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" 
+            aria-valuemin="0" aria-valuemax="100" style.width="{{(res.count*100/maxB)}}%">
+                {{res.count}}
+            </div>  
+        </div>
+    </div>
+</div>
+
+<h4> Part c </h4>
+<div class="partc">
+    <h5 *ngIf="!resultC.length">No Entries</h5>
+    <div  *ngFor="let res of resultC">
+    <div >{{res.name}}</div>
+        <div class="progress ">
+            <div class="progress-bar progress-bar-success" role="progressbar" 
+            aria-valuemin="0" aria-valuemax="100" style.width="{{(res.count*100/maxC)}}%">
+                {{res.count}}
+            </div>  
+        </div>
+    </div>
+</div>
