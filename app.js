@@ -3,7 +3,6 @@ var path                          = require('path');
 var logger                        = require('morgan');
 var cookieParser                  = require('cookie-parser');
 var bodyParser                    = require('body-parser');
-var index                         = require('./routes/index');
 var marvel                        = require('./routes/marvel.js');
 var app                           = express();
 require('./errors');//load errors
@@ -21,7 +20,6 @@ app.use("/marver", function(req, res, next){
     res.set('content-type', 'application/json');
     next();
 });
-app.use('/', index);
 
 app.use('/marvel', marvel);
 
